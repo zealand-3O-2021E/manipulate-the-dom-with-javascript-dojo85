@@ -75,10 +75,43 @@
 // button.innerText = "Press here";
 // button.setAttribute('class', 'btn btn-warning');
 
-let hi = document.createTextNode('hi');
-let para = document.getElementById('para1');
-para.appendChild(hi);
-para.innerHTML += '<h1>hello</h1>';
+// let hi = document.createTextNode('hi');
+// let para = document.getElementById('para1');
+// para.appendChild(hi);
+// para.innerHTML += '<h1>hello</h1>';
 
+document.getElementById('addButton').addEventListener("click", addItem);
 
+function addItem(){
+    let item = document.getElementById('itemInput').value;
+    let hList = document.getElementById('list');
+    let uList = document.getElementById('listUnhealthy');
+    let newLi = document.createElement('li');
+    let text = document.createTextNode(item);
+    newLi.appendChild(text);
+    newLi.setAttribute('id', getNextId())
+
+    let chekcBox = document.getElementById('checkUnhealthy').checked;
+    if(chekcBox)
+    {
+        newLi.setAttribute('class','unhealthy'); 
+        uList.appendChild(newLi);  
+    }
+    else{
+        newLi.setAttribute('class','healthy'); 
+        hList.appendChild(newLi);  
+    } 
+}
+
+function getNextId() {
+    let list = document.getElementsByTagName('li');
+    let id;
+    if(list.length == 0){
+        return id = 1;
+    }
+    for (let i = 0; i < list.length; i++){
+        id = list[i].getAttribute('id');
+    }
+    return ++id;
+}
 

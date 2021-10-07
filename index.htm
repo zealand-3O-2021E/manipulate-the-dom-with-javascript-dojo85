@@ -8,12 +8,12 @@
 
 </head>
 
-<body>
+<body class="p-3">
   <h1>Manipulate the DOM</h1>
   <h2>Shoppinglist</h2>
   <div>
     <ul id="list">
-      <li id="0" class="unhealthy bg-dark">Marshmallows</li>
+      <li id="0" class="unhealthy">Marshmallows</li>
       <li id="1" class="healthy">Cashew nuts</li>
       <li id="2" class="unhealthy">Beer</li>
       <li id="3" class="healthy">Apples</li>
@@ -26,9 +26,15 @@
     </ul>
   </div>
 
-  <p id="para1"></p>
-  <button id="firstButton" type="button" class="btn"></button>
-
+  <hr>
+  <div>
+    
+    <label>Add item:</label><br>
+    <input id="itemInput" type="text"><br>
+    Unhealthy stuff: <input type="checkbox" id="checkUnhealthy"/><br>
+    <button id="addButton" type="submit">Button</button>
+  </div>
+  
   
   <script src="js/index.js"></script>
 </body>
