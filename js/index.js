@@ -1,95 +1,45 @@
-// //Write your Javascript code here
-// // console.log("Shoppinglist")
+let listItems = document.getElementsByTagName('li');
+let uList = document.getElementById('listUnhealthy');
 
-// // let one = document.getElementById('0');
-// // console.log(one);
+for (let k = 0 ; k < listItems.length; k++){
+    let item = listItems[k];
+    if(item.getAttribute('class') == 'unhealthy'){
+        uList.appendChild(item);
+    }
+}
 
-// // let list1 = document.getElementsByTagName('li');
-// // console.log(list1);
-
-// // for (let i = 0; i < list1.length; i++){
-// //     console.log(list1[i]);
-// // }
-
-// let nodes = document.getElementsByClassName('unhealthy');
-
-// // for (let j = 0  ; j < nodes.length ; j++){
-// //     console.log(nodes[j]);
-// // }
-
-// // // the change og value actually alters the list
-// // // for the next execution of the loop
-// for (let k = 0 ; k < nodes.length;){
-//     nodes[k].setAttribute('class','healthy');
-// }
-
-// // let someItem = document.getElementById('1');
-
-// // let parentNode = someItem.parentNode;
-// // console.log(parentNode);
-// // let first = parentNode.firstElementChild;
-// // console.log(first);
-// // first.setAttribute('style', 'background-color: blue;')
-// // let last = parentNode.lastElementChild;
-// // last.setAttribute('style','background-color: black;')
-
-// // let newChild = document.createElement('li');
-// // console.log(newChild);
-// // newChild.innerHTML = 'Chocolate';
-// // document.getElementById('list').appendChild(newChild);
-
-
-// //Task 7
-// // let unhealthy = document.querySelectorAll('ul > .unhealthy');
-// // for (let i = 0; i < unhealthy.length; i++){
-// //     console.log(unhealthy[i]);
-// // }
-
-// // let listNode = document.getElementById('listUnhealthy');
-
-// // for (let i = 0; i < unhealthy.length; i++){
-// //     listNode.appendChild(unhealthy[i])
-// // }
-
-// //Task 8
-// let element = document.getElementById('0');
-// element.innerText='Bananas';
-// let beer = document.getElementById('2');
-// beer.innerText = 'Bier';
-
-// //Task 9
-// // let list = document.getElementById('list');
-// // list.removeChild(list.childNodes[0]);
-
-
-// // //Task 10
-// let para = document.createElement('p');
-// let heading = document.createElement('h1');
-// heading.innerText = 'this is a heading';
-// para.appendChild(heading);
-// document.getElementById('para1').innerHTML = para.innerHTML;
-
-
-
-// let button = document.getElementById('firstButton');
-// button.innerText = "Press here";
-// button.setAttribute('class', 'btn btn-warning');
-
-// let hi = document.createTextNode('hi');
-// let para = document.getElementById('para1');
-// para.appendChild(hi);
-// para.innerHTML += '<h1>hello</h1>';
-
+document.getElementById('unhide').addEventListener('click', unhideItems);
 document.getElementById('addButton').addEventListener("click", addItem);
+document.getElementById('itemInput').addEventListener('keyup', 
+    function(e){ 
+        if(e.key == 'Enter')
+        {
+            addItem();
+        }
+    });
+
+for (let j = 0; j < listItems.length; j++){
+    let oldItems = document.getElementsByTagName('li');
+    oldItems[j].addEventListener("click", () => hideItem(listItems[j].id));
+    oldItems[j].style.cursor = "pointer";
+}
 
 function addItem(){
-    let item = document.getElementById('itemInput').value;
+    let textField = document.getElementById('itemInput');
+    let item = textField.value;
+    if(item === ""){
+        console.log('Field is empty')
+        alert("The input field is empty.");
+        return;
+    }
     let hList = document.getElementById('list');
-    let uList = document.getElementById('listUnhealthy');
+    uList = document.getElementById('listUnhealthy');
     let newLi = document.createElement('li');
     let text = document.createTextNode(item);
     newLi.appendChild(text);
-    newLi.setAttribute('id', getNextId())
+    newLi.setAttribute('id', getNextId());    
+    newLi.style.cursor = "pointer";
+    newLi.addEventListener("click", () => hideItem(newLi.id));
 
     let chekcBox = document.getElementById('checkUnhealthy').checked;
     if(chekcBox)
@@ -101,17 +51,34 @@ function addItem(){
         newLi.setAttribute('class','healthy'); 
         hList.appendChild(newLi);  
     } 
+    textField.value = "";
 }
 
 function getNextId() {
     let list = document.getElementsByTagName('li');
-    let id;
-    if(list.length == 0){
+    let id = 0;
+    if(list.length === 0){
         return id = 1;
     }
     for (let i = 0; i < list.length; i++){
-        id = list[i].getAttribute('id');
+        if(list[i].id > id){
+            id = list[i].getAttribute('id');
+        }        
     }
     return ++id;
+}
+
+function hideItem(id){
+    let item = document.getElementById(id);
+    if(item !== null) {
+       item.setAttribute('hidden', true); 
+    }    
+}
+
+function unhideItems(){
+    let list = document.getElementsByTagName('li');
+    for (let i = 0; i < list.length; i++){
+        list[i].removeAttribute('hidden');
+    }
 }
 
